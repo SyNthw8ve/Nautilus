@@ -1,5 +1,6 @@
 #include <GL/glut.h>
-#include "numeric/vectors.h" 
+#include "include/nautilus/kernel.h"
+
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT);

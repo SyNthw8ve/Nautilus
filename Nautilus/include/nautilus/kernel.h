@@ -1,4 +1,5 @@
 #include "precision.h"
+#include <math.h>
 
 namespace nautilus
 {
@@ -29,12 +30,12 @@ namespace nautilus
 
 			real magnitude() const
 			{
-				return real_sqrt(x * x + y * y + z * z);
+				return sqrt(x * x + y * y + z * z);
 			}
 
 			real square_magnitude() const
 			{
-				return x * X + y * y + z * z;
+				return x * x + y * y + z * z;
 			}
 
 			void normalize()
@@ -112,12 +113,17 @@ namespace nautilus
 			void get_orthonormal_basis(Vector3* a, Vector3* b, Vector3* c)
 			{
 				a->normalize();
-				*c = a->cross_product(b);
+				*c = a->cross_product(*b);
 
 				if (c->square_magnitude() == 0.0) return;
 
 				c->normalize();
-				*b = c->cross_product(a);
+				*b = c->cross_product(*a);
+			}
+
+			void clear()
+			{
+				x = y = z = 0;
 			}
 
 	};
