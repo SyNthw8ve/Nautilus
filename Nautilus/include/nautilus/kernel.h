@@ -3,7 +3,6 @@
 
 namespace nautilus
 {
-
 	class Vector3
 	{
 
