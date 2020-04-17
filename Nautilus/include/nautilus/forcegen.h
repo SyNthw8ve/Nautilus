@@ -1,4 +1,5 @@
 #include "particles.h"
+#include <vector>
 
 namespace nautilus {
 
@@ -10,7 +11,7 @@ namespace nautilus {
 
 	class ParticleForceRegistry
 	{
-	protected:
+	public:
 
 		struct ParticleForceRegistration
 		{

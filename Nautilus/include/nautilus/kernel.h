@@ -20,110 +20,47 @@ namespace nautilus
 			Vector3(const real x, const real y, const real z)
 				: x(x), y(y), z(z) {}
 
-			void invert()
-			{
-				x = -x;
-				y = -y;
-				z = -z;
-			}
+			void invert();
 
-			real magnitude() const
-			{
-				return sqrt(x * x + y * y + z * z);
-			}
+			real get_x() const;
+			real get_y() const;
+			real get_z() const;
 
-			real square_magnitude() const
-			{
-				return x * x + y * y + z * z;
-			}
+			void set_x(real x_);
+			void set_y(real y_);
+			void set_z(real z_);
 
-			void normalize()
-			{
-				real l = magnitude();
+			real magnitude() const;
 
-				(*this) *= ((real)1) / l;
-			}
+			real square_magnitude() const;
 
-			void operator*=(const real value)
-			{
-				x *= value;
-				y *= value;
-				z *= value;
-			}
+			void normalize();
 
-			Vector3 operator*(const real value) const
-			{
-				return Vector3(x * value, y * value, z * value);
-			}
+			void operator*=(const real value);
 
-			void operator+=(const Vector3& v)
-			{
-				x += v.x;
-				y += v.y;
-				z += v.z;
-			}
+			Vector3 operator*(const real value) const;
 
-			Vector3 operator+(const Vector3& v)
-			{
-				return Vector3(x + v.x, y + v.y, z + v.z);
-			}
+			void operator+=(const Vector3& v);
 
-			void operator-=(const Vector3& v)
-			{
-				x -= v.x;
-				y -= v.y;
-				z -= v.z;
-			}
+			Vector3 operator+(const Vector3& v);
 
-			Vector3 operator-(const Vector3& v)
-			{
-				return Vector3(x - v.x, y - v.y, z - v.z);
-			}
+			void operator-=(const Vector3& v);
 
-			void add_scaled_vector(const Vector3& v, real scale)
-			{
-				x += v.x * scale;
-				y += v.y * scale;
-				z += v.z * scale;
-			}
+			Vector3 operator-(const Vector3& v);
 
-			Vector3 entry_product(const Vector3& v) const
-			{
-				return Vector3(x * v.x, y * v.y, z * v.z);
-			}
+			void add_scaled_vector(const Vector3& v, real scale);
 
-			void entry_product_update(const Vector3& v)
-			{
-				x *= v.x;
-				y *= v.y;
-				z *= v.z;
-			}
+			Vector3 entry_product(const Vector3& v) const;
 
-			real dot_product(const Vector3& v) const
-			{
-				return x * v.x + y * v.y + z * v.z;
-			}
+			void entry_product_update(const Vector3& v);
 
-			Vector3 cross_product(const Vector3& v) const
-			{
-				return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
-			}
+			real dot_product(const Vector3& v) const;
 
-			void get_orthonormal_basis(Vector3* a, Vector3* b, Vector3* c)
-			{
-				a->normalize();
-				*c = a->cross_product(*b);
+			Vector3 cross_product(const Vector3& v) const;
 
-				if (c->square_magnitude() == 0.0) return;
+			void get_orthonormal_basis(Vector3* a, Vector3* b, Vector3* c);
 
-				c->normalize();
-				*b = c->cross_product(*a);
-			}
-
-			void clear()
-			{
-				x = y = z = 0;
-			}
+			void clear();
 
 	};
 }

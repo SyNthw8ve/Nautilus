@@ -1,4 +1,4 @@
-#include <nautilus/forcegen.h>
+#include "../include/nautilus/forcegen.h"
 
 using namespace nautilus;
 

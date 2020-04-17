@@ -1,10 +1,10 @@
-#include "kernel.h";
+#include "kernel.h"
 
 namespace nautilus {
 
 	class Particle
 	{
-	protected:
+	public:
 
 		Vector3 position;
 		Vector3 velocity;
@@ -38,7 +38,7 @@ namespace nautilus {
 
 		Vector3 get_position() const;
 		Vector3 get_velocity() const;
-		Vector3 get_acceleration();
+		Vector3 get_acceleration() const;
 
 		bool has_finite_mass() const;
 	};

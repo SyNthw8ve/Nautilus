@@ -1,7 +1,9 @@
 #include <assert.h>
-#include <nautilus/particles.h>
+#include <emscripten/bind.h>
+#include "../include/nautilus/particles.h"
 
 using namespace nautilus;
+using namespace emscripten;
 
 void Particle::integrate(real duration)
 {
@@ -17,7 +19,7 @@ void Particle::integrate(real duration)
 
 	velocity *= real_pow(damping, duration);
 
-	clearAccumulator();
+	clear_accumulator();
 }
 
 void Particle::set_mass(const real mass)
@@ -59,7 +61,7 @@ real Particle::get_damping() const
 	return Particle::damping;
 }
 
-void Particle::set_position(Vector3& position)
+void Particle::set_position(const Vector3& position)
 {
 	Particle::position = position;
 }
@@ -81,7 +83,7 @@ Vector3 Particle::get_position() const
 	return Particle::position;
 }
 
-void Particle::set_velocity(Vector3 &velocity)
+void Particle::set_velocity(const Vector3 &velocity)
 {
 	Particle::velocity = velocity;
 }
@@ -103,7 +105,7 @@ Vector3 Particle::get_velocity() const
 	return Particle::velocity;
 }
 
-void Particle::set_acceleration(Vector3 &acceleration)
+void Particle::set_acceleration(const Vector3 &acceleration)
 {
 	Particle::acceleration = acceleration;
 }
@@ -134,3 +136,4 @@ void Particle::add_force(const Vector3& force)
 {
 	force_accum += force;
 }
+
