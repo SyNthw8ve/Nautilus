@@ -15,7 +15,7 @@ void Particle::integrate(real duration)
 
 	Vector3 resulting_acc = acceleration;
 
-	velocity.add_scaled_vector(resulting_acc, duration);
+	velocity.add_scaled_vector(force_accum, duration);
 
 	velocity *= real_pow(damping, duration);
 
@@ -117,6 +117,11 @@ void Particle::set_acceleration(const real x, const real y, const real z)
 	acceleration.z = z;
 }
 
+void nautilus::Particle::set_force(const Vector3& force)
+{
+	Particle::force_accum = force;
+}
+
 void Particle::get_acceleration(Vector3* acceleration) const
 {
 	*acceleration = Particle::acceleration;
@@ -125,6 +130,11 @@ void Particle::get_acceleration(Vector3* acceleration) const
 Vector3 Particle::get_acceleration() const
 {
 	return Particle::acceleration;
+}
+
+Vector3 nautilus::Particle::get_force() const
+{
+	return Particle::force_accum;
 }
 
 void Particle::clear_accumulator()
@@ -139,6 +149,7 @@ void Particle::add_force(const Vector3& force)
 
 EMSCRIPTEN_BINDINGS(particle_class) {
 	class_<nautilus::Particle>("Particle")
+		.constructor<nautilus::Vector3, nautilus::Vector3, nautilus::Vector3, nautilus::Vector3, real, real>()
 		.property("position", 
 			select_overload<Vector3()const>(&nautilus::Particle::get_position),
 			select_overload<void(const Vector3&)>(&nautilus::Particle::set_position))
@@ -148,6 +159,9 @@ EMSCRIPTEN_BINDINGS(particle_class) {
 		.property("acceleration",
 			select_overload<Vector3()const>(&nautilus::Particle::get_acceleration),
 			select_overload<void(const Vector3&)>(&nautilus::Particle::set_acceleration))
+		.property("force_accum",
+			select_overload<Vector3()const>(&nautilus::Particle::get_force),
+			select_overload<void(const Vector3&)>(&nautilus::Particle::set_force))
 		.property("damping", &nautilus::Particle::get_damping, &nautilus::Particle::set_damping)
 		.property("inverse_mass", &nautilus::Particle::get_inverse_mass, &nautilus::Particle::set_inverse_mass)
 		.function("integrate", &nautilus::Particle::integrate)

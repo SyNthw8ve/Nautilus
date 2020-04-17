@@ -144,12 +144,25 @@ void ParticleFakeSpring::update_force(Particle* particle, real duration)
 
 EMSCRIPTEN_BINDINGS(particle_registry) {
 
+	class_<nautilus::ParticleForceGenerator>("ParticleForceGenerator");
+
 	class_<nautilus::ParticleForceRegistry>("ParticleForceRegistry")
+		.constructor<>()
 		.property("registrations", &nautilus::ParticleForceRegistry::registrations)
 		.function("add", &nautilus::ParticleForceRegistry::add, allow_raw_pointers())
 		.function("remove", &nautilus::ParticleForceRegistry::remove, allow_raw_pointers())
 		.function("clear", &nautilus::ParticleForceRegistry::clear)
 		.function("update_forces", &nautilus::ParticleForceRegistry::update_forces)
+		;
+
+	class_<nautilus::ParticleGravity, base<nautilus::ParticleForceGenerator>>("ParticleGravity")
+		.constructor<nautilus::Vector3>()
+		.function("update_force", &nautilus::ParticleGravity::update_force, allow_raw_pointers())
+		;
+
+	class_<nautilus::ParticleDrag, base<nautilus::ParticleForceGenerator>>("ParticleDrag")
+		.constructor<real, real>()
+		.function("update_force", &nautilus::ParticleDrag::update_force, allow_raw_pointers())
 		;
 
 	register_vector<nautilus::ParticleForceRegistry::ParticleForceRegistration>("vector<ParticleForceRegistration>");

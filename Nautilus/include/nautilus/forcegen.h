@@ -13,6 +13,8 @@ namespace nautilus {
 	{
 	public:
 
+		ParticleForceRegistry() {}
+
 		struct ParticleForceRegistration
 		{
 			Particle* particle;
@@ -38,7 +40,7 @@ namespace nautilus {
 
 	public:
 
-		ParticleGravity(const Vector3& gravity);
+		ParticleGravity(const Vector3& gravity) : gravity(gravity) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
@@ -51,7 +53,7 @@ namespace nautilus {
 
 	public:
 
-		ParticleDrag(real k1, real k2);
+		ParticleDrag(real k1, real k2) : k1(k1), k2(k2) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
@@ -65,7 +67,8 @@ namespace nautilus {
 
 	public:	
 
-		ParticleSpring(Particle* other, real spring_const, real rest_length);
+		ParticleSpring(Particle* other, real spring_const, real rest_length)
+			: other(other), spring_const(spring_const), rest_length(rest_length) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
