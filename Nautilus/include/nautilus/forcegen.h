@@ -22,8 +22,6 @@ namespace nautilus {
 		typedef std::vector<ParticleForceRegistration> Registry;
 		Registry registrations;
 
-	public:
-
 		void add(Particle* particle, ParticleForceGenerator* force_gen);
 
 		void remove(Particle* particle, ParticleForceGenerator* force_gen);

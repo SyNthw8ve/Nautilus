@@ -1,6 +1,28 @@
 #include "../include/nautilus/forcegen.h"
+#include <emscripten/bind.h>
 
 using namespace nautilus;
+using namespace emscripten;
+
+
+void ParticleForceRegistry::add(Particle* particle, ParticleForceGenerator* force_gen)
+{
+	ParticleForceRegistry::ParticleForceRegistration registration;
+	registration.particle = particle;
+	registration.force_gen = force_gen;
+
+	ParticleForceRegistry::registrations.push_back(registration);
+}
+
+void ParticleForceRegistry::remove(Particle* particle, ParticleForceGenerator* force_gen)
+{
+
+}
+
+void ParticleForceRegistry::clear()
+{
+	ParticleForceRegistry::registrations.clear();
+}
 
 void ParticleForceRegistry::update_forces(real duration)
 {
@@ -32,8 +54,6 @@ void ParticleDrag::update_force(Particle* particle, real duration)
 	force *= -drag_coeff;
 
 	particle->add_force(force);
-
-
 }
 
 void ParticleSpring::update_force(Particle* particle, real duration)
@@ -120,4 +140,18 @@ void ParticleFakeSpring::update_force(Particle* particle, real duration)
 	Vector3 accel = (target - position) * (1.0f / duration * duration) - particle->get_velocity() * duration;
 
 	particle->add_force(accel * particle->get_mass());
+}
+
+EMSCRIPTEN_BINDINGS(particle_registry) {
+
+	class_<nautilus::ParticleForceRegistry>("ParticleForceRegistry")
+		.property("registrations", &nautilus::ParticleForceRegistry::registrations)
+		.function("add", &nautilus::ParticleForceRegistry::add, allow_raw_pointers())
+		.function("remove", &nautilus::ParticleForceRegistry::remove, allow_raw_pointers())
+		.function("clear", &nautilus::ParticleForceRegistry::clear)
+		.function("update_forces", &nautilus::ParticleForceRegistry::update_forces)
+		;
+
+	register_vector<nautilus::ParticleForceRegistry::ParticleForceRegistration>("vector<ParticleForceRegistration>");
+
 }
