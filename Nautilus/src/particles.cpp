@@ -137,3 +137,22 @@ void Particle::add_force(const Vector3& force)
 	force_accum += force;
 }
 
+EMSCRIPTEN_BINDINGS(particle_class) {
+	class_<nautilus::Particle>("Particle")
+		.property("position", 
+			select_overload<Vector3()const>(&nautilus::Particle::get_position),
+			select_overload<void(const Vector3&)>(&nautilus::Particle::set_position))
+		.property("velocity",
+			select_overload<Vector3()const>(&nautilus::Particle::get_velocity),
+			select_overload<void(const Vector3&)>(&nautilus::Particle::set_velocity))
+		.property("acceleration",
+			select_overload<Vector3()const>(&nautilus::Particle::get_acceleration),
+			select_overload<void(const Vector3&)>(&nautilus::Particle::set_acceleration))
+		.property("damping", &nautilus::Particle::get_damping, &nautilus::Particle::set_damping)
+		.property("inverse_mass", &nautilus::Particle::get_inverse_mass, &nautilus::Particle::set_inverse_mass)
+		.function("integrate", &nautilus::Particle::integrate)
+		.function("clear_accumulator", &nautilus::Particle::clear_accumulator)
+		.function("add_force", &nautilus::Particle::add_force)
+		.function("has_finite_mass", &nautilus::Particle::has_finite_mass)
+		;
+}

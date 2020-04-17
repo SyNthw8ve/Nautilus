@@ -6,6 +6,8 @@ namespace nautilus {
 	{
 	public:
 
+
+	public:
 		Vector3 position;
 		Vector3 velocity;
 		Vector3 acceleration;
