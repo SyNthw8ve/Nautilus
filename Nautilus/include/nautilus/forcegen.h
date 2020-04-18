@@ -82,7 +82,8 @@ namespace nautilus {
 
 	public:
 
-		ParticleAnchoredSpring(Vector3* anchor, real spring_const, real rest_length);
+		ParticleAnchoredSpring(Vector3* anchor, real spring_const, real rest_length)
+			: anchor(anchor), spring_const(spring_const), rest_length(rest_length) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
@@ -96,7 +97,8 @@ namespace nautilus {
 
 	public:
 
-		ParticleBungee(Particle* other, real spring_const, real rest_length);
+		ParticleBungee(Particle* other, real spring_const, real rest_length)
+			: other(other), spring_const(spring_const), rest_length(rest_length) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
@@ -110,7 +112,8 @@ namespace nautilus {
 
 	public:
 
-		ParticleBuoyancy(real max_depth, real volume, real water_height, real liquid_density = 1000.0f);
+		ParticleBuoyancy(real max_depth, real volume, real water_height, real liquid_density = 1000.0f)
+			: max_depth(max_depth), volume(volume), water_height(water_height), liquid_density(liquid_density) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};
@@ -124,7 +127,8 @@ namespace nautilus {
 
 	public:
 
-		ParticleFakeSpring(Vector3* anchor, real spring_const, real damping);
+		ParticleFakeSpring(Vector3* anchor, real spring_const, real damping)
+			: anchor(anchor), spring_const(spring_const), damping(damping) {}
 
 		virtual void update_force(Particle* particle, real duration);
 	};

@@ -165,6 +165,31 @@ EMSCRIPTEN_BINDINGS(particle_registry) {
 		.function("update_force", &nautilus::ParticleDrag::update_force, allow_raw_pointers())
 		;
 
+	class_<nautilus::ParticleSpring, base<nautilus::ParticleForceGenerator>>("ParticleSpring")
+		.constructor<nautilus::Particle*, real, real>()
+		.function("update_force", &nautilus::ParticleSpring::update_force, allow_raw_pointers())
+		;
+
+	class_<nautilus::ParticleAnchoredSpring, base<nautilus::ParticleForceGenerator>>("ParticleAnchoredSpring")
+		.constructor<nautilus::Vector3*, real, real>()
+		.function("update_force", &nautilus::ParticleAnchoredSpring::update_force, allow_raw_pointers())
+		;
+
+	class_<nautilus::ParticleBungee, base<nautilus::ParticleForceGenerator>>("ParticleBungee")
+		.constructor<nautilus::Particle*, real, real>()
+		.function("update_force", &nautilus::ParticleBungee::update_force, allow_raw_pointers())
+		;
+
+	class_<nautilus::ParticleBuoyancy, base<nautilus::ParticleForceGenerator>>("ParticleBuoyancy")
+		.constructor<real, real, real, real>()
+		.function("update_force", &nautilus::ParticleBuoyancy::update_force, allow_raw_pointers())
+		;
+
+	class_<nautilus::ParticleFakeSpring, base<nautilus::ParticleForceGenerator>>("ParticleFakeString")
+		.constructor<nautilus::Vector3*, real, real>()
+		.function("update_force", &nautilus::ParticleFakeSpring::update_force, allow_raw_pointers())
+		;
+
 	register_vector<nautilus::ParticleForceRegistry::ParticleForceRegistration>("vector<ParticleForceRegistration>");
 
 }
