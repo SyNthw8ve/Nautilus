@@ -4,6 +4,7 @@ namespace nautilus {
 
 	class ParticleContact
 	{
+	public:
 		Particle* particle[2];
 
 		real restitution;
@@ -21,5 +22,20 @@ namespace nautilus {
 
 		void resolve_velocity(real duration);
 		void resolve_interpenetration(real duration);
+	};
+
+	class ParticleContactResolver
+	{
+	public:
+
+		unsigned iterations;
+		unsigned iterations_used;
+
+		ParticleContactResolver(unsigned iterations) : iterations(iterations) {}
+
+		void set_iterations(unsigned iterations);
+
+		void resolve_contacts(ParticleContact* contact_array, unsigned num_contacts, real duration);
+
 	};
 }

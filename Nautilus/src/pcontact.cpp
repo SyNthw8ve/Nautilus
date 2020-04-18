@@ -91,3 +91,39 @@ void ParticleContact::resolve_interpenetration(real duration)
 		particle[1]->set_position(particle[1]->get_position() + particle_movement[1]);
 	}
 }
+
+void ParticleContactResolver::set_iterations(unsigned iterations)
+{
+	ParticleContactResolver::iterations = iterations;
+}
+
+void ParticleContactResolver::resolve_contacts(ParticleContact* contact_array, unsigned num_contacts, real duration)
+{
+	unsigned i;
+
+	iterations_used = 0;
+
+	while (iterations_used < iterations)
+	{
+		real max = REAL_MAX;
+		unsigned max_index = num_contacts;
+
+		for (i = 0; i < num_contacts; i++)
+		{
+			real sep_vel = contact_array[i].calculate_separating_velocity();
+
+			if (sep_vel < max &&
+				(sep_vel < 0 || contact_array[i].penetration > 0))
+			{
+				max = sep_vel;
+				max_index = i;
+			}
+		}
+
+		if (max_index == num_contacts) break;
+
+		contact_array[max_index].resolve(duration);
+
+		iterations_used++;
+	}
+}
